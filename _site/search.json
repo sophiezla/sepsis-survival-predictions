@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "about-me.html",
+    "href": "about-me.html",
+    "title": "About",
+    "section": "",
+    "text": "About page."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "graphs.html",
+    "href": "graphs.html",
+    "title": "Graphs",
+    "section": "",
+    "text": "More graphs"
+  },
+  {
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Sources",
+    "section": "",
+    "text": "Sources used"
+  },
+  {
+    "objectID": "main-graph.html",
+    "href": "main-graph.html",
+    "title": "Main Graph",
+    "section": "",
+    "text": "Saving 7 x 5 in image"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "\\[\\begin{equation}\n  \\text{logit}(P(y = 1 \\mid \\mathbf{x})) = \\beta_0 + \\beta_1 \\cdot \\text{age\\_years} + \\beta_2 \\cdot \\text{sex\\_0male\\_1female} + \\beta_3 \\cdot \\text{episode\\_number}\n\\end{equation}\\]"
+  }
+]

@@ -1,0 +1,29 @@
+---
+title: "Home"
+---
+
+```{=tex}
+
+
+\begin{equation}
+  \text{logit}(P(y = 1 \mid \mathbf{x})) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{sex} + \beta_3 \cdot \text{episode\_number}
+\end{equation}
+
+where:
+
+\begin{equation}
+  \text{logit}(P) = \log \left( \frac{P}{1 - P} \right)
+\end{equation}
+
+The probability of the outcome (survival) is:
+
+\begin{equation}
+  P(y = 1 \mid \mathbf{x}) = \frac{1}{1 + \exp\left( - (\beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{sex} + \beta_3 \cdot \text{episode\_number}) \right)}
+\end{equation}
+
+The priors for the parameters are:
+
+\begin{equation}
+  \beta_i \sim \mathcal{N}(0, 5) \quad \text{for} \quad i = 0, 1, 2, 3
+\end{equation}
+```

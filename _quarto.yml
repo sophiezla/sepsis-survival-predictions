@@ -1,0 +1,25 @@
+project:
+  type: website
+
+website:
+  title: "Sepsis Survival Predictions"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Graphs
+        href: graphs.qmd
+      - text: About
+        href: about.qmd
+      - text: Sources
+        href: sources.qmd
+      
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+
+
+

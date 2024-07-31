@@ -1,0 +1,86 @@
+---
+title: "Main Graph"
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: Setup
+#| message: false
+# Load in all the libraries that may be used in model and graph creation.
+library(tidyverse)
+library(gt)
+library(tidybayes)
+library(brms)
+# Read in the data
+sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
+```
+
+```{r}
+# Mutate and edit the data
+#| label: edit data
+sepsis_data <- sepsis_data |>
+  mutate(
+    age = age_years,
+    sex = factor(sex_0male_1female, labels = c("Male", "Female")),
+    outcome = hospital_outcome_1alive_0dead
+  )
+```
+
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+#| warnings: false
+# Make the model with all covariates to outcome.
+fit_sepsis <- brm(
+  formula = outcome ~ age + sex + episode_number,
+  family = bernoulli(link = "logit"),
+  data = sepsis_data,
+  silent = 2, 
+  refresh = 0)
+
+```
+
+```{r}
+#| label: make new object
+# Generate new observations for prediction
+new_obs <- sepsis_data |>
+  distinct(episode_number, sex) |>
+  mutate(age = mean(sepsis_data$age))
+
+# Generate predicted draws
+predicted_draws <- posterior_epred(fit_sepsis, newdata = new_obs, ndraws = 1000)
+
+# Convert predicted_draws to long format
+predicted_long <- as.data.frame(predicted_draws) |>
+  pivot_longer(cols = everything(), names_to = "draw", values_to = "predicted")
+
+# Repeat new_obs to match the number of rows in predicted_long
+new_obs_repeated <- new_obs[rep(seq_len(nrow(new_obs)), each = 1000), ]
+
+# Combine predicted values with new_obs
+predicted_long <- bind_cols(predicted_long, new_obs_repeated)
+
+```
+
+```{r}
+#| label: plot
+
+predicted_long |>
+  ggplot(aes(x = predicted, y = as.factor(episode_number), fill = sex)) + 
+  stat_slab(alpha = 0.5, position = "identity") + 
+  scale_fill_manual(values = c("Male" = "cornflowerblue", "Female"  = "darkred")) + 
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) +
+  labs(
+    title = "Probability of Surviving by Episode Number and Gender",
+    x = "Predicted Probability of Surviving (%)",
+    y = "Episode Number",
+    fill = "Sex"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+ggsave(filename = "graph_without_interaction.png", plot = last_plot())
+```
