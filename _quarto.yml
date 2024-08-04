@@ -9,6 +9,8 @@ website:
         text: Home
       - text: Graphs
         menu: 
+          - href: model.qmd
+            text: Main model
           - href: episodes.qmd
             text: Episode Numbers
           - href: ages.qmd

@@ -98,6 +98,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
         <li>
+    <a class="dropdown-item" href="./model.html">
+ <span class="dropdown-text">Main model</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./episodes.html">
  <span class="dropdown-text">Episode Numbers</span></a>
   </li>  
@@ -136,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#about-me" id="toc-about-me" class="nav-link active" data-scroll-target="#about-me">About Me</a></li>
-  <li><a href="#about-this-project" id="toc-about-this-project" class="nav-link" data-scroll-target="#about-this-project">About This Project</a></li>
+  <li><a href="#about-this-site" id="toc-about-this-site" class="nav-link" data-scroll-target="#about-this-site">About this site</a></li>
   </ul>
 </nav>
     </div>
@@ -168,10 +172,10 @@ ul.task-list li input[type="checkbox"] {
 <p>My Github aaccount: <a href="https://github.com/sophiezla" class="uri">https://github.com/sophiezla</a></p>
 <p>Contact me at: sophie2024la@gmail.com</p>
 </section>
-<section id="about-this-project" class="level2">
-<h2 class="anchored" data-anchor-id="about-this-project">About This Project</h2>
+<section id="about-this-site" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-site">About this site</h2>
 <p>The Github repository for this project: <a href="https://github.com/sophiezla/sepsis-survival-project" class="uri">https://github.com/sophiezla/sepsis-survival-project</a></p>
-<p>This project was created as a part of Kane’s Data Science Bootcamp. <a href="https://bootcamp.davidkane.info/" class="uri">https://bootcamp.davidkane.info/</a></p>
+<p>This project was created as a part of <a href="https://bootcamp.davidkane.info/">Kane’s Data Science Bootcamp</a></p>
 
 
 </section>
@@ -258,7 +262,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/sophiezla\.quarto\.pub\/sepsis-survival-predictions");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

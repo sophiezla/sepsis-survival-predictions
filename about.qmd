@@ -8,9 +8,9 @@ My Github aaccount: <https://github.com/sophiezla>
 
 Contact me at: sophie2024la@gmail.com
 
-## About This Project
+## About this site
 
 The Github repository for this project: <https://github.com/sophiezla/sepsis-survival-project>
 
-This project was created as a part of Kane's Data Science Bootcamp.
-<https://bootcamp.davidkane.info/>
+This project was created as a part of [Kane's Data Science Bootcamp](https://bootcamp.davidkane.info/)
+
