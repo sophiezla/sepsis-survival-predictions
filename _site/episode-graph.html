@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sepsis Survival Predictions - Home</title>
+<title>Sepsis Survival Predictions - Episode number and Survivale Rate Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -118,7 +152,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -160,21 +194,14 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#sepsis-survival-rate" id="toc-sepsis-survival-rate" class="nav-link active" data-scroll-target="#sepsis-survival-rate">Sepsis Survival Rate:</a></li>
-  <li><a href="#overview-of-sepsis" id="toc-overview-of-sepsis" class="nav-link" data-scroll-target="#overview-of-sepsis">Overview of Sepsis:</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Home</h1>
+<h1 class="title">Episode number and Survivale Rate Model</h1>
 </div>
 
 
@@ -191,28 +218,57 @@ window.Quarto = {
 </header>
 
 
-<section id="sepsis-survival-rate" class="level2">
-<h2 class="anchored" data-anchor-id="sepsis-survival-rate">Sepsis Survival Rate:</h2>
-<p><small>(Episode number refers to the number of times a patient has had sepsis)</small></p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in all the libraries that may be used in model and graph creation.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in the data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sepsis_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mutate and edit the data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: edit data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sepsis_data <span class="ot">&lt;-</span> sepsis_data <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outcome =</span> hospital_outcome_1alive_0dead)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-warnings="false">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the model with episode number as the covariate to outcome.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fit_episode <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> outcome <span class="sc">~</span> episode_number,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">bernoulli</span>(),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sepsis_data,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">silent =</span> <span class="dv">2</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(fit_episode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in tidy.brmsfit(x, ..., effects = "fixed"): some parameter names
+contain underscores: term naming may be unreliable!</code></pre>
+</div>
 <div class="cell-output-display">
-<div id="rdprgqaxdr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rdprgqaxdr table {
+<div id="fyghcggebh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fyghcggebh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rdprgqaxdr thead, #rdprgqaxdr tbody, #rdprgqaxdr tfoot, #rdprgqaxdr tr, #rdprgqaxdr td, #rdprgqaxdr th {
+#fyghcggebh thead, #fyghcggebh tbody, #fyghcggebh tfoot, #fyghcggebh tr, #fyghcggebh td, #fyghcggebh th {
   border-style: none;
 }
 
-#rdprgqaxdr p {
+#fyghcggebh p {
   margin: 0;
   padding: 0;
 }
 
-#rdprgqaxdr .gt_table {
+#fyghcggebh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -238,12 +294,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_caption {
+#fyghcggebh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rdprgqaxdr .gt_title {
+#fyghcggebh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -255,7 +311,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#rdprgqaxdr .gt_subtitle {
+#fyghcggebh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -267,7 +323,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#rdprgqaxdr .gt_heading {
+#fyghcggebh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -279,13 +335,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_bottom_border {
+#fyghcggebh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_col_headings {
+#fyghcggebh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -300,7 +356,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_col_heading {
+#fyghcggebh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -320,7 +376,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#rdprgqaxdr .gt_column_spanner_outer {
+#fyghcggebh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -332,15 +388,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#rdprgqaxdr .gt_column_spanner_outer:first-child {
+#fyghcggebh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rdprgqaxdr .gt_column_spanner_outer:last-child {
+#fyghcggebh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rdprgqaxdr .gt_column_spanner {
+#fyghcggebh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -352,11 +408,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#rdprgqaxdr .gt_spanner_row {
+#fyghcggebh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rdprgqaxdr .gt_group_heading {
+#fyghcggebh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -382,7 +438,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#rdprgqaxdr .gt_empty_group_heading {
+#fyghcggebh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -397,15 +453,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#rdprgqaxdr .gt_from_md > :first-child {
+#fyghcggebh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rdprgqaxdr .gt_from_md > :last-child {
+#fyghcggebh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rdprgqaxdr .gt_row {
+#fyghcggebh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -424,7 +480,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#rdprgqaxdr .gt_stub {
+#fyghcggebh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -437,7 +493,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rdprgqaxdr .gt_stub_row_group {
+#fyghcggebh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -451,15 +507,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#rdprgqaxdr .gt_row_group_first td {
+#fyghcggebh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rdprgqaxdr .gt_row_group_first th {
+#fyghcggebh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rdprgqaxdr .gt_summary_row {
+#fyghcggebh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -469,16 +525,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rdprgqaxdr .gt_first_summary_row {
+#fyghcggebh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_first_summary_row.thick {
+#fyghcggebh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rdprgqaxdr .gt_last_summary_row {
+#fyghcggebh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -488,7 +544,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_grand_summary_row {
+#fyghcggebh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -498,7 +554,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rdprgqaxdr .gt_first_grand_summary_row {
+#fyghcggebh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -508,7 +564,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_last_grand_summary_row_top {
+#fyghcggebh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -518,11 +574,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_striped {
+#fyghcggebh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rdprgqaxdr .gt_table_body {
+#fyghcggebh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -531,7 +587,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_footnotes {
+#fyghcggebh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -545,7 +601,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_footnote {
+#fyghcggebh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -554,7 +610,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rdprgqaxdr .gt_sourcenotes {
+#fyghcggebh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -568,7 +624,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#rdprgqaxdr .gt_sourcenote {
+#fyghcggebh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -576,72 +632,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#rdprgqaxdr .gt_left {
+#fyghcggebh .gt_left {
   text-align: left;
 }
 
-#rdprgqaxdr .gt_center {
+#fyghcggebh .gt_center {
   text-align: center;
 }
 
-#rdprgqaxdr .gt_right {
+#fyghcggebh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rdprgqaxdr .gt_font_normal {
+#fyghcggebh .gt_font_normal {
   font-weight: normal;
 }
 
-#rdprgqaxdr .gt_font_bold {
+#fyghcggebh .gt_font_bold {
   font-weight: bold;
 }
 
-#rdprgqaxdr .gt_font_italic {
+#fyghcggebh .gt_font_italic {
   font-style: italic;
 }
 
-#rdprgqaxdr .gt_super {
+#fyghcggebh .gt_super {
   font-size: 65%;
 }
 
-#rdprgqaxdr .gt_footnote_marks {
+#fyghcggebh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rdprgqaxdr .gt_asterisk {
+#fyghcggebh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rdprgqaxdr .gt_indent_1 {
+#fyghcggebh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rdprgqaxdr .gt_indent_2 {
+#fyghcggebh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rdprgqaxdr .gt_indent_3 {
+#fyghcggebh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rdprgqaxdr .gt_indent_4 {
+#fyghcggebh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rdprgqaxdr .gt_indent_5 {
+#fyghcggebh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rdprgqaxdr .katex-display {
+#fyghcggebh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rdprgqaxdr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fyghcggebh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -665,31 +721,9 @@ window.Quarto = {
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">age</td>
-<td class="gt_row gt_center" headers="estimate">-0.04</td>
-<td class="gt_row gt_center" headers="conf.low">-0.05, -0.04</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">sex</td>
-<td class="gt_row gt_center" headers="estimate"><br>
-</td>
-<td class="gt_row gt_center" headers="conf.low"><br>
-</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
-<td class="gt_row gt_center" headers="estimate">—</td>
-<td class="gt_row gt_center" headers="conf.low">—</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
-<td class="gt_row gt_center" headers="estimate">0.18</td>
-<td class="gt_row gt_center" headers="conf.low">0.13, 0.23</td>
-</tr>
-<tr class="odd">
 <td class="gt_row gt_left" headers="label">episode_number</td>
 <td class="gt_row gt_center" headers="estimate">-0.03</td>
-<td class="gt_row gt_center" headers="conf.low">-0.05, 0.01</td>
+<td class="gt_row gt_center" headers="conf.low">-0.06, 0.00</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="even">
@@ -704,40 +738,50 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make new object for predictions</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>newobs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">episode_number =</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a color palette with shades of blue</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#1f77b4"</span>, <span class="co"># blue</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"#3399cc"</span>, <span class="co"># lighter blue</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"#66b2ff"</span>, <span class="co"># even lighter blue</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"#99ccff"</span>, <span class="co"># light blue</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"#cce5ff"</span>  <span class="co"># very light blue</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the predictions</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>fit_episode <span class="sc">|&gt;</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate predictions</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_epred_draws</span>(<span class="at">newdata =</span> newobs) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make episode-number a factor, flip order of bottom to top</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .epred, <span class="at">y =</span> <span class="fu">fct_rev</span>(<span class="fu">factor</span>(episode_number)), <span class="at">fill =</span> <span class="fu">factor</span>(episode_number))) <span class="sc">+</span> </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_slab</span>() <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Predicted Probability of Surviving by Episode Number"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Predicted Probability of Surviving"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Episode Number"</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Episode Number"</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change x-axis to percent format</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change background to be cleaner</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/plot-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="episode-graph_files/figure-html/plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><span class="math display">\[
-\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i + \beta_2 \cdot \text{sex}_{i,\text{Male}} + \beta_3 \cdot \text{episode\_number}_i
-\]</span></p>
-</section>
-<section id="overview-of-sepsis" class="level2">
-<h2 class="anchored" data-anchor-id="overview-of-sepsis">Overview of Sepsis:</h2>
-<p>Sepsis is a dangerous condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases.</p>
-<p>Important symptoms to lookout for are…</p>
-<pre><code>-  Rashes
-
--  Change in heart rate
-
--  Change in body temperature
-
--  Fatigue
-
--  Disorientation
-
--  Discomfort
-
--  Clammy or sweaty skin
-
--  Shivers or chills</code></pre>
+<p><span class="math display">\[ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i \]</span></p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -821,7 +865,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/sophiezla\.quarto\.pub\/sepsis-survival-predictions");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

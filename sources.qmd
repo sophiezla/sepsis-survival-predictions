@@ -2,4 +2,11 @@
 title: "Sources"
 format: html
 ---
-Sources used
+
+The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.
+
+  - <https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records>
+
+Information on Sepsis in this website was sourced from Cleveland Clinic.
+
+  - <https://my.clevelandclinic.org/health/diseases/12361-sepsis>

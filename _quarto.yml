@@ -8,12 +8,17 @@ website:
       - href: index.qmd
         text: Home
       - text: Graphs
-        href: graphs.qmd
-      - text: About
-        href: about.qmd
-      - text: Sources
-        href: sources.qmd
-      
+        menu: 
+          - href: episodes.qmd
+            text: Episode Numbers
+          - href: ages.qmd
+            text: Ages
+          - href: gender.qmd
+            text: Genders
+      - href: about.qmd
+        text: About
+      - href: sources.qmd
+        text: Sources
 
 format:
   html:

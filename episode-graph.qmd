@@ -1,0 +1,90 @@
+---
+title: "Episode number and Survivale Rate Model"
+---
+
+```{r}
+#| label: Setup
+#| message: false
+# Load in all the libraries that may be used in model and graph creation.
+library(tidyverse)
+library(gtsummary)
+library(tidybayes)
+library(brms)
+library(broom.mixed)
+
+# Read in the data
+sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
+```
+
+```{r}
+# Mutate and edit the data
+#| label: edit data
+sepsis_data <- sepsis_data |>
+  mutate(
+    outcome = hospital_outcome_1alive_0dead)
+  
+```
+
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+#| warnings: false
+# Make the model with episode number as the covariate to outcome.
+fit_episode <- brm(
+  formula = outcome ~ episode_number,
+  family = bernoulli(),
+  data = sepsis_data,
+  silent = 2, 
+  refresh = 0)
+
+```
+
+```{r}
+#| label: table
+tbl_regression(fit_episode)
+```
+
+```{r}
+#| label: make a new object
+# Make new object for predictions
+newobs <- tibble(
+  episode_number = c( 1, 2, 3, 4, 5))
+  
+```
+
+```{r}
+#| label: plot
+# Define a color palette with shades of blue
+colors <- c(
+  "1" = "#1f77b4", # blue
+  "2" = "#3399cc", # lighter blue
+  "3" = "#66b2ff", # even lighter blue
+  "4" = "#99ccff", # light blue
+  "5" = "#cce5ff"  # very light blue
+)
+
+# Plot the predictions
+fit_episode |> 
+  # Generate predictions
+  add_epred_draws(newdata = newobs) |>
+  # Make episode-number a factor, flip order of bottom to top
+  ggplot(aes(x = .epred, y = fct_rev(factor(episode_number)), fill = factor(episode_number))) + 
+  stat_slab() +
+  scale_fill_manual(values = colors) +
+  # Add labels
+  labs(
+    title = "Predicted Probability of Surviving by Episode Number",
+    x = "Predicted Probability of Surviving",
+    y = "Episode Number",
+    fill = "Episode Number"
+  ) +
+  # Change x-axis to percent format
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
+  # Change background to be cleaner
+  theme_minimal()
+
+```
+
+$$ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i $$

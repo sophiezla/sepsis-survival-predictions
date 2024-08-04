@@ -7,11 +7,12 @@ execute:
 ```{r}
 #| label: Setup
 #| message: false
-# Load in all the libraries that may be used in model and graph creation.
+# Load in all the libraries that may be used 
 library(tidyverse)
-library(gt)
+library(gtsummary)
 library(tidybayes)
 library(brms)
+library(broom.mixed)
 # Read in the data
 sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
 ```
@@ -20,11 +21,14 @@ sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.
 # Mutate and edit the data
 #| label: edit data
 sepsis_data <- sepsis_data |>
+# Rework the sex column to make more sense
   mutate(
+# Make cloumn names shorter and easier to work with
     age = age_years,
     sex = factor(sex_0male_1female, labels = c("Male", "Female")),
     outcome = hospital_outcome_1alive_0dead
   )
+
 ```
 
 
@@ -44,43 +48,49 @@ fit_sepsis <- brm(
 ```
 
 ```{r}
+#| label: table
+tbl_regression(fit_sepsis)
+```
+
+
+```{r}
 #| label: make new object
 # Generate new observations for prediction
-new_obs <- sepsis_data |>
-  distinct(episode_number, sex) |>
-  mutate(age = mean(sepsis_data$age))
-
-# Generate predicted draws
-predicted_draws <- posterior_epred(fit_sepsis, newdata = new_obs, ndraws = 1000)
-
-# Convert predicted_draws to long format
-predicted_long <- as.data.frame(predicted_draws) |>
-  pivot_longer(cols = everything(), names_to = "draw", values_to = "predicted")
-
-# Repeat new_obs to match the number of rows in predicted_long
-new_obs_repeated <- new_obs[rep(seq_len(nrow(new_obs)), each = 1000), ]
-
-# Combine predicted values with new_obs
-predicted_long <- bind_cols(predicted_long, new_obs_repeated)
+newobs <- expand.grid(
+  episode_number = c(1, 2, 3, 4, 5), 
+  sex = c("Male", "Female"), 
+  # use average age
+  age = mean(sepsis_data$age)
+)
 
 ```
 
 ```{r}
 #| label: plot
 
-predicted_long |>
-  ggplot(aes(x = predicted, y = as.factor(episode_number), fill = sex)) + 
+fit_sepsis |> 
+  add_epred_draws(newdata = newobs) |>
+# Make the graph with x as the predicted surrvival rate, y as the episode numbers, and color as the sex
+  ggplot(aes(x = .epred, y = as.factor(episode_number), fill = sex)) + 
+# Chose to make stat_slab
   stat_slab(alpha = 0.5, position = "identity") + 
+# Manually add colors for better customizatino
   scale_fill_manual(values = c("Male" = "cornflowerblue", "Female"  = "darkred")) + 
+# Change x-axis labels to percent format
   scale_x_continuous(labels = scales::label_percent(accuracy = 1)) +
+# Add labels and key
   labs(
     title = "Probability of Surviving by Episode Number and Gender",
     x = "Predicted Probability of Surviving (%)",
     y = "Episode Number",
     fill = "Sex"
   ) +
+# Make a cleaner theme
   theme_minimal() +
   theme(legend.position = "bottom")
 
-ggsave(filename = "graph_without_interaction.png", plot = last_plot())
 ```
+
+$$
+\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i + \beta_2 \cdot \text{sex}_{i,\text{Male}} + \beta_3 \cdot \text{episode_number}_i
+$$

@@ -1,17 +1,94 @@
 [
   {
-    "objectID": "about-me.html",
-    "href": "about-me.html",
-    "title": "About",
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Sources",
     "section": "",
-    "text": "About page."
+    "text": "The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.\n\nhttps://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records\n\nInformation on Sepsis in this website was sourced from Cleveland Clinic.\n\nhttps://my.clevelandclinic.org/health/diseases/12361-sepsis"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "(Episode number refers to the number of times a patient has had sepsis)\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\nsex\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.18\n0.13, 0.23\n\n\nepisode_number\n-0.03\n-0.05, 0.01\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i + \\beta_2 \\cdot \\text{sex}_{i,\\text{Male}} + \\beta_3 \\cdot \\text{episode\\_number}_i\n\\]"
+  },
+  {
+    "objectID": "index.html#sepsis-survival-rate",
+    "href": "index.html#sepsis-survival-rate",
+    "title": "Home",
+    "section": "",
+    "text": "(Episode number refers to the number of times a patient has had sepsis)\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\nsex\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.18\n0.13, 0.23\n\n\nepisode_number\n-0.03\n-0.05, 0.01\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i + \\beta_2 \\cdot \\text{sex}_{i,\\text{Male}} + \\beta_3 \\cdot \\text{episode\\_number}_i\n\\]"
+  },
+  {
+    "objectID": "index.html#overview-of-sepsis",
+    "href": "index.html#overview-of-sepsis",
+    "title": "Home",
+    "section": "Overview of Sepsis:",
+    "text": "Overview of Sepsis:\nSepsis is a dangerous condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases.\nImportant symptoms to lookout for are…\n-  Rashes\n\n-  Change in heart rate\n\n-  Change in body temperature\n\n-  Fatigue\n\n-  Disorientation\n\n-  Discomfort\n\n-  Clammy or sweaty skin\n\n-  Shivers or chills"
+  },
+  {
+    "objectID": "gender.html",
+    "href": "gender.html",
+    "title": "Gender",
+    "section": "",
+    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\ngender\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.15\n0.11, 0.20\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{gender}_{i,\\text{Male}}\\]"
+  },
+  {
+    "objectID": "episodes.html",
+    "href": "episodes.html",
+    "title": "Episodes",
+    "section": "",
+    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]"
+  },
+  {
+    "objectID": "ages.html",
+    "href": "ages.html",
+    "title": "Age",
+    "section": "",
+    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "Hello. I’m Sophie Zhu, a high school student from California.\nMy Github aaccount: https://github.com/sophiezla\nContact me at: sophie2024la@gmail.com"
+  },
+  {
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
+    "title": "About",
+    "section": "",
+    "text": "Hello. I’m Sophie Zhu, a high school student from California.\nMy Github aaccount: https://github.com/sophiezla\nContact me at: sophie2024la@gmail.com"
+  },
+  {
+    "objectID": "about.html#about-this-project",
+    "href": "about.html#about-this-project",
+    "title": "About",
+    "section": "About This Project",
+    "text": "About This Project\nThe Github repository for this project: https://github.com/sophiezla/sepsis-survival-project\nThis project was created as a part of Kane’s Data Science Bootcamp. https://bootcamp.davidkane.info/"
+  },
+  {
+    "objectID": "age-graph.html",
+    "href": "age-graph.html",
+    "title": "Age and Sepsis Survival Rate Model",
+    "section": "",
+    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]"
+  },
+  {
+    "objectID": "episode-graph.html",
+    "href": "episode-graph.html",
+    "title": "Episode number and Survivale Rate Model",
+    "section": "",
+    "text": "# Load in all the libraries that may be used in model and graph creation.\nlibrary(tidyverse)\nlibrary(gtsummary)\nlibrary(tidybayes)\nlibrary(brms)\nlibrary(broom.mixed)\n\n# Read in the data\nsepsis_data &lt;- read.csv(\"data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv\")\n\n\n# Mutate and edit the data\n#| label: edit data\nsepsis_data &lt;- sepsis_data |&gt;\n  mutate(\n    outcome = hospital_outcome_1alive_0dead)\n\n\n# Make the model with episode number as the covariate to outcome.\nfit_episode &lt;- brm(\n  formula = outcome ~ episode_number,\n  family = bernoulli(),\n  data = sepsis_data,\n  silent = 2, \n  refresh = 0)\n\n\ntbl_regression(fit_episode)\n\nWarning in tidy.brmsfit(x, ..., effects = \"fixed\"): some parameter names\ncontain underscores: term naming may be unreliable!\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n# Make new object for predictions\nnewobs &lt;- tibble(\n  episode_number = c( 1, 2, 3, 4, 5))\n\n\n# Define a color palette with shades of blue\ncolors &lt;- c(\n  \"1\" = \"#1f77b4\", # blue\n  \"2\" = \"#3399cc\", # lighter blue\n  \"3\" = \"#66b2ff\", # even lighter blue\n  \"4\" = \"#99ccff\", # light blue\n  \"5\" = \"#cce5ff\"  # very light blue\n)\n\n# Plot the predictions\nfit_episode |&gt; \n  # Generate predictions\n  add_epred_draws(newdata = newobs) |&gt;\n  # Make episode-number a factor, flip order of bottom to top\n  ggplot(aes(x = .epred, y = fct_rev(factor(episode_number)), fill = factor(episode_number))) + \n  stat_slab() +\n  scale_fill_manual(values = colors) +\n  # Add labels\n  labs(\n    title = \"Predicted Probability of Surviving by Episode Number\",\n    x = \"Predicted Probability of Surviving\",\n    y = \"Episode Number\",\n    fill = \"Episode Number\"\n  ) +\n  # Change x-axis to percent format\n  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +\n  # Change background to be cleaner\n  theme_minimal()\n\n\n\n\n\n\n\n\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]"
+  },
+  {
+    "objectID": "gender-graph.html",
+    "href": "gender-graph.html",
+    "title": "Gender and Survival Rate Model",
+    "section": "",
+    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\ngender\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.15\n0.11, 0.20\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{gender}_{i,\\text{Male}}\\]"
   },
   {
     "objectID": "graphs.html",
@@ -21,24 +98,10 @@
     "text": "More graphs"
   },
   {
-    "objectID": "sources.html",
-    "href": "sources.html",
-    "title": "Sources",
-    "section": "",
-    "text": "Sources used"
-  },
-  {
     "objectID": "main-graph.html",
     "href": "main-graph.html",
     "title": "Main Graph",
     "section": "",
-    "text": "Saving 7 x 5 in image"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "\\[\\begin{equation}\n  \\text{logit}(P(y = 1 \\mid \\mathbf{x})) = \\beta_0 + \\beta_1 \\cdot \\text{age\\_years} + \\beta_2 \\cdot \\text{sex\\_0male\\_1female} + \\beta_3 \\cdot \\text{episode\\_number}\n\\end{equation}\\]"
+    "text": "Warning in tidy.brmsfit(x, ..., effects = \"fixed\"): some parameter names\ncontain underscores: term naming may be unreliable!\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\nsex\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.18\n0.13, 0.23\n\n\nepisode_number\n-0.03\n-0.05, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\n\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i + \\beta_2 \\cdot \\text{sex}_{i,\\text{Male}} + \\beta_3 \\cdot \\text{episode_number}_i\n\\]"
   }
 ]

@@ -1,5 +1,16 @@
 ---
 title: "About"
 ---
+## About Me
+Hello. I'm Sophie Zhu, a high school student from California.
 
-About this site
+My Github aaccount: <https://github.com/sophiezla>
+
+Contact me at: sophie2024la@gmail.com
+
+## About This Project
+
+The Github repository for this project: <https://github.com/sophiezla/sepsis-survival-project>
+
+This project was created as a part of Kane's Data Science Bootcamp.
+<https://bootcamp.davidkane.info/>

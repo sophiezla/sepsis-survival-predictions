@@ -92,10 +92,25 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./graphs.html"> 
-<span class="menu-text">Graphs</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Graphs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
+        <li>
+    <a class="dropdown-item" href="./episodes.html">
+ <span class="dropdown-text">Episode Numbers</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./ages.html">
+ <span class="dropdown-text">Ages</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gender.html">
+ <span class="dropdown-text">Genders</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
@@ -140,7 +155,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Sources used</p>
+<p>The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.</p>
+<ul>
+<li><a href="https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records" class="uri">https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records</a></li>
+</ul>
+<p>Information on Sepsis in this website was sourced from Cleveland Clinic.</p>
+<ul>
+<li><a href="https://my.clevelandclinic.org/health/diseases/12361-sepsis" class="uri">https://my.clevelandclinic.org/health/diseases/12361-sepsis</a></li>
+</ul>
 
 
 
@@ -226,7 +248,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/sophiezla\.quarto\.pub\/sepsis-survival-predictions");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

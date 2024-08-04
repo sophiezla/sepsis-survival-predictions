@@ -1,29 +1,129 @@
 ---
 title: "Home"
+execute: 
+  echo: false
+  warnings: false
 ---
+By using a dataset from Norway on 110,204 patient admissions of people with Sepsis from 2011 to 2012, we wanted to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis and gender. Though healthcare has dramatically changed over the years, we believe for these predictions to hold true. We used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female increases the odds of survival, higher age decreases the probability of survival, while higher episode numbers have slightly lower chance of survival of about 3%, though it may be as much as 5% or as low as 0%.
 
-```{=tex}
+## Sepsis Survival Rate:
+<small>(Episode number refers to the number of times a patient has had sepsis)</small>
 
 
-\begin{equation}
-  \text{logit}(P(y = 1 \mid \mathbf{x})) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{sex} + \beta_3 \cdot \text{episode\_number}
-\end{equation}
 
-where:
-
-\begin{equation}
-  \text{logit}(P) = \log \left( \frac{P}{1 - P} \right)
-\end{equation}
-
-The probability of the outcome (survival) is:
-
-\begin{equation}
-  P(y = 1 \mid \mathbf{x}) = \frac{1}{1 + \exp\left( - (\beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{sex} + \beta_3 \cdot \text{episode\_number}) \right)}
-\end{equation}
-
-The priors for the parameters are:
-
-\begin{equation}
-  \beta_i \sim \mathcal{N}(0, 5) \quad \text{for} \quad i = 0, 1, 2, 3
-\end{equation}
+```{r}
+#| label: Setup
+#| message: false
+# Load in all the libraries that may be used 
+library(tidyverse)
+library(gtsummary)
+library(tidybayes)
+library(brms)
+library(broom.mixed)
+# Read in the data
+sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
 ```
+
+```{r}
+# Mutate and edit the data
+#| label: edit data
+sepsis_data <- sepsis_data |>
+# Rework the sex column to make more sense
+  mutate(
+# Make cloumn names shorter and easier to work with
+    age = age_years,
+    sex = factor(sex_0male_1female, labels = c("Male", "Female")),
+    outcome = hospital_outcome_1alive_0dead
+  )
+
+```
+
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+#| warnings: false
+# Make the model with all covariates to outcome.
+fit_sepsis <- brm(
+  formula = outcome ~ age + sex + episode_number,
+  family = bernoulli(link = "logit"),
+  data = sepsis_data,
+  silent = 2, 
+  refresh = 0)
+
+```
+
+
+```{r}
+#| label: make new object
+# Generate new observations for prediction
+newobs <- expand.grid(
+  episode_number = c(1, 2, 3, 4, 5), 
+  sex = c("Male", "Female"), 
+  # use average age
+  age = mean(sepsis_data$age)
+)
+
+```
+
+```{r}
+#| label: plot
+
+fit_sepsis |> 
+  add_epred_draws(newdata = newobs) |>
+# Make the graph with x as the predicted surrvival rate, y as the episode numbers, and color as the sex
+  ggplot(aes(x = .epred, y = as.factor(episode_number), fill = sex)) + 
+# Chose to make stat_slab
+  stat_slab(alpha = 0.5, position = "identity") + 
+# Manually add colors for better customizatino
+  scale_fill_manual(values = c("Male" = "cornflowerblue", "Female"  = "darkred")) + 
+# Change x-axis labels to percent format
+  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) +
+# Add labels and key
+  labs(
+    title = "Probability of Surviving by Episode Number and Gender",
+    x = "Predicted Probability of Surviving (%)",
+    y = "Episode Number",
+    fill = "Sex"
+  ) +
+# Make a cleaner theme
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+
+$$
+\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i + \beta_2 \cdot \text{sex}_{i,\text{Male}} + \beta_3 \cdot \text{episode\_number}_i
+$$
+
+```{r}
+#| label: table
+#| warning: false
+tbl_regression(fit_sepsis)
+```
+
+
+
+
+## Overview of Sepsis:
+Sepsis is a dangerous condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases. 
+
+  Important symptoms to lookout for are...
+  
+    -  Rashes
+    
+    -  Change in heart rate
+    
+    -  Change in body temperature
+    
+    -  Fatigue
+    
+    -  Disorientation
+    
+    -  Discomfort
+    
+    -  Clammy or sweaty skin
+    
+    -  Shivers or chills
+    

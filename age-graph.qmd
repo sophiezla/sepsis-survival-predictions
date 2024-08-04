@@ -1,0 +1,106 @@
+---
+title: "Age and Sepsis Survival Rate Model"
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: Setup
+#| message: false
+# Load in all the libraries that may be used in model and graph creation.
+library(tidyverse)
+library(gtsummary)
+library(tidybayes)
+library(brms)
+library(broom.mixed)
+# Read in the data
+sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
+```
+
+```{r}
+# Mutate and edit the data
+#| label: edit data
+sepsis_data <- sepsis_data |>
+  mutate(
+    age = age_years,
+    outcome = hospital_outcome_1alive_0dead,
+    age_group = cut(age_years, breaks = seq(0, 100, by = 10), include.lowest = TRUE, right = FALSE, labels = paste(seq(0, 90, by = 10), seq(10, 100, by = 10), sep = "-"))
+  )
+
+```
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+#| warnings: false
+# Make the model with age as the covariate to outcome.
+fit_age <- brm(
+  formula = outcome ~ age,
+  family = bernoulli(),
+  data = sepsis_data,
+  silent = 2, 
+  refresh = 0)
+
+```
+
+```{r}
+#| label: table
+tbl_regression(fit_age)
+```
+
+
+```{r}
+#| label: make a new object
+newobs <- tibble(
+  age_group = factor(c( "0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", "91-100")),
+  age = c(5, 15, 25, 35, 45, 55, 65, 75, 85, 95)
+)
+
+```
+
+
+
+```{r}
+#| label: plot_age
+colors <- c(
+  "0-10" = "#77a5fb",  # very light blue
+  "11-20" = "#6da0f7", # even lighter blue
+  "21-30" = "#639bf3", # very light blue
+  "31-40" = "#5a96ef", # light blue
+  "41-50" = "#5091e5", # even lighter blue
+  "51-60" = "#468bdb", # very light blue
+  "61-70" = "#3c85d1", # light blue
+  "71-80" = "#3380cc", # even lighter blue
+  "81-90" = "#287abf", # lighter blue
+  "91-100" = "#1f77b4" # blue
+)
+
+# Plot the predictions
+fit_age |>
+  # Generate predictions
+  add_epred_draws(newdata = newobs) |>
+  ggplot(aes(x = .epred, y = factor(age_group, levels = levels(newobs$age_group)), fill = factor(age_group, levels = levels(newobs$age_group)))) + 
+  stat_slab() +
+  # Use color palette for all groups
+  scale_fill_manual(values = colors) +
+  # Add labels
+  labs(
+    title = "Predicted Probability of Surviving by Age Group",
+    x = "Predicted Probability of Surviving",
+    y = "Age Group", 
+    subtitle = "Older ages are less likely to survive", 
+    caption = "Source: Sepsis Survival Predictions dataset", 
+    fill = "Age Group"
+  ) +
+  # Turn x-axis to percent format
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
+  # Clean background
+  theme_minimal() +
+  # Remove legend (if needed)
+  theme(legend.position = "none")
+  
+```
+
+$$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i $$
+

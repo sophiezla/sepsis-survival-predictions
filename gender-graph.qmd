@@ -1,0 +1,83 @@
+---
+title: "Gender and Survival Rate Model"
+execute: 
+  echo: false
+---
+
+
+```{r}
+#| label: Setup
+#| message: false
+# Load in all the libraries that may be used in model and graph creation.
+library(tidyverse)
+library(gtsummary)
+library(tidybayes)
+library(brms)
+library(broom.mixed)
+# Read in the data
+sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
+```
+
+```{r}
+# Mutate and edit the data
+#| label: edit data
+sepsis_data <- sepsis_data |>
+  mutate(
+    # Make column names and variables easier to understand
+    outcome = hospital_outcome_1alive_0dead, 
+    gender = factor(sex_0male_1female, labels = c("Male", "Female")))
+  
+```
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+#| warnings: false
+# Make the model with gender as the covariate to outcome.
+fit_gender <- brm(
+  formula = outcome ~ gender,
+  family = bernoulli(),
+  data = sepsis_data,
+  silent = 2, 
+  refresh = 0)
+```
+
+```{r}
+#| label: table
+# Use gtsummary and brooms.mixed to make a table
+tbl_regression(fit_gender)
+```
+
+```{r}
+#| label: New object
+# Make new object for predictions
+newobs <- tibble(gender = c("Male", "Female"))
+```
+
+```{r}
+#| label: plot
+# Plot the predictions
+fit_gender |> 
+  add_epred_draws(newdata = newobs) |>
+  ggplot(aes(x = .epred, y = gender)) +
+  #Use stat_slab for multiple levels
+  stat_slab(alpha = 0.5, aes(fill = gender)) +
+  scale_fill_manual(values = c("Male" = "cornflowerblue", "Female"  = "darkred")) +
+  # Add informative labels
+  labs(
+    title = "Predicted Probability of Surviving by Gender",
+    subtitle = "Females have a higher chance of survival than males",
+    x = "Predicted Probability of Surviving",
+    y = "Gender", 
+    fill = "Gender", 
+    caption = "Source: Sepsis Survival Prediction Dataset"
+  )  +
+  # Change x-axis to percent format
+  scale_x_continuous(labels = scales::percent_format(accuracy = 0.5)) +
+  # Change background to be cleaner
+  theme_minimal()
+```
+
+
+ $$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{gender}_{i,\text{Male}}$$
