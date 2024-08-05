@@ -32,7 +32,7 @@
     "href": "episode-graph.html",
     "title": "Episode number and Survivale Rate Model",
     "section": "",
-    "text": "# Load in all the libraries that may be used in model and graph creation.\nlibrary(tidyverse)\nlibrary(gtsummary)\nlibrary(tidybayes)\nlibrary(brms)\nlibrary(broom.mixed)\n\n# Read in the data\nsepsis_data &lt;- read.csv(\"data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv\")\n\n\n# Mutate and edit the data\n#| label: edit data\nsepsis_data &lt;- sepsis_data |&gt;\n  mutate(\n    outcome = hospital_outcome_1alive_0dead)\n\n\n# Make the model with episode number as the covariate to outcome.\nfit_episode &lt;- brm(\n  formula = outcome ~ episode_number,\n  family = bernoulli(),\n  data = sepsis_data,\n  silent = 2, \n  refresh = 0)\n\n\ntbl_regression(fit_episode)\n\nWarning in tidy.brmsfit(x, ..., effects = \"fixed\"): some parameter names\ncontain underscores: term naming may be unreliable!\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n# Make new object for predictions\nnewobs &lt;- tibble(\n  episode_number = c( 1, 2, 3, 4, 5))\n\n\n# Define a color palette with shades of blue\ncolors &lt;- c(\n  \"1\" = \"#1f77b4\", # blue\n  \"2\" = \"#3399cc\", # lighter blue\n  \"3\" = \"#66b2ff\", # even lighter blue\n  \"4\" = \"#99ccff\", # light blue\n  \"5\" = \"#cce5ff\"  # very light blue\n)\n\n# Plot the predictions\nfit_episode |&gt; \n  # Generate predictions\n  add_epred_draws(newdata = newobs) |&gt;\n  # Make episode-number a factor, flip order of bottom to top\n  ggplot(aes(x = .epred, y = fct_rev(factor(episode_number)), fill = factor(episode_number))) + \n  stat_slab() +\n  scale_fill_manual(values = colors) +\n  # Add labels\n  labs(\n    title = \"Predicted Probability of Surviving by Episode Number\",\n    x = \"Predicted Probability of Surviving\",\n    y = \"Episode Number\",\n    fill = \"Episode Number\"\n  ) +\n  # Change x-axis to percent format\n  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +\n  # Change background to be cleaner\n  theme_minimal()\n\n\n\n\n\n\n\n\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]"
+    "text": "# Load in all the libraries that may be used in model and graph creation.\nlibrary(tidyverse)\nlibrary(gtsummary)\nlibrary(tidybayes)\nlibrary(brms)\nlibrary(broom.mixed)\n\n# Read in the data\nsepsis_data &lt;- read.csv(\"data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv\")\n\n\n# Mutate and edit the data\n#| label: edit data\nsepsis_data &lt;- sepsis_data |&gt;\n  mutate(\n    outcome = hospital_outcome_1alive_0dead)\n\n\n# Make the model with episode number as the covariate to outcome.\nfit_episode &lt;- brm(\n  formula = outcome ~ episode_number,\n  family = bernoulli(),\n  data = sepsis_data,\n  silent = 2, \n  refresh = 0)\n\n\ntbl_regression(fit_episode)\n\nWarning in tidy.brmsfit(x, ..., effects = \"fixed\"): some parameter names\ncontain underscores: term naming may be unreliable!\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n# Make new object for predictions\nnewobs &lt;- tibble(\n  episode_number = c( 1, 2, 3, 4, 5))\n\n\n# Define a color palette with shades of blue\ncolors &lt;- c(\n  \"1\" = \"#1f77b4\", # blue\n  \"2\" = \"#3399cc\", # lighter blue\n  \"3\" = \"#66b2ff\", # even lighter blue\n  \"4\" = \"#99ccff\", # light blue\n  \"5\" = \"#cce5ff\"  # very light blue\n)\n\n# Plot the predictions\nfit_episode |&gt; \n  # Generate predictions\n  add_epred_draws(newdata = newobs) |&gt;\n  # Make episode-number a factor, flip order of bottom to top\n  ggplot(aes(x = .epred, y = fct_rev(factor(episode_number)), fill = factor(episode_number))) + \n  stat_slab() +\n  scale_fill_manual(values = colors) +\n  # Add labels\n  labs(\n    title = \"Predicted Probability of Surviving by Episode Number\",\n    subtitle = \"Increased episodes result in a lower survival probability\",\n    x = \"Predicted Probability of Surviving\",\n    y = \"Episode Number\",\n    fill = \"Episode Number\"\n  ) +\n  # Change x-axis to percent format\n  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +\n  # Change background to be cleaner\n  theme_minimal()\n\n\n\n\n\n\n\n\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]"
   },
   {
     "objectID": "age-graph.html",
@@ -65,50 +65,36 @@
   {
     "objectID": "ages.html",
     "href": "ages.html",
-    "title": "Age",
+    "title": "Ages",
     "section": "",
-    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]"
+    "text": "To see the effect of age we use the following equation…\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]\nFrom this we see that for every additional year of age, survival rate decreases.\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nThe model, once graphed mimics a parabolic curve."
   },
   {
     "objectID": "episodes.html",
     "href": "episodes.html",
-    "title": "Episodes",
+    "title": "Episode Numbers",
     "section": "",
-    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]"
+    "text": "To see the individual effects of the variables on survival rate, we modeled the variable of the number of episodes using the following equation…\n\\[ \\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{episode\\_number}_i \\]\nWe receive the resulting effect…\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nWe graph the model to see the clear trend of lower survival rates with more episodes."
   },
   {
     "objectID": "gender.html",
     "href": "gender.html",
-    "title": "Gender",
+    "title": "Genders",
     "section": "",
-    "text": "Characteristic\nBeta\n95% CI\n1\n\n\n\n\ngender\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.15\n0.11, 0.20\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{gender}_{i,\\text{Male}}\\]"
+    "text": "We used the following equation to model the effects of gender on the survival rate…\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{gender}_{i,\\text{Male}}\\]\nFrom the results we see that females have a slightly higher chance of survival than males.\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\ngender\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.15\n0.11, 0.20\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nThe model is then graphed using draws in order to visualize the probabilities."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "By using a dataset from Norway on 110,204 patient admissions of people with Sepsis from 2011 to 2012, we wanted to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis and gender. The data was sourced from Kaggle on containing deidentified data on hospitalized patients. It includes the variables of sex, age, episode number and survival outcome.Though healthcare has dramatically changed over the years, we believe for these predictions to hold true. We used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female can increases the odds of survival by 18%, higher age decreases the probability of survival by 4%, while higher episode numbers have slightly lower chance of survival of about 3%, though it may be as much as 5% or as low as 0%."
-  },
-  {
-    "objectID": "index.html#sepsis-survival-rate",
-    "href": "index.html#sepsis-survival-rate",
-    "title": "Home",
-    "section": "Sepsis Survival Rate:",
-    "text": "Sepsis Survival Rate:\n(Episode number refers to the number of times a patient has had sepsis)"
-  },
-  {
-    "objectID": "index.html#overview-of-sepsis",
-    "href": "index.html#overview-of-sepsis",
-    "title": "Home",
-    "section": "Overview of Sepsis:",
-    "text": "Overview of Sepsis:\nSepsis is a dangerous condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases.\nImportant symptoms to lookout for are…\n-  Rashes\n\n-  Change in heart rate\n\n-  Change in body temperature\n\n-  Fatigue\n\n-  Disorientation\n\n-  Discomfort\n\n-  Clammy or sweaty skin\n\n-  Shivers or chills"
+    "text": "By using a data set from Norway on 110,204 patient admissions of people with Sepsis from 2011 to 2012, we wanted to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis and gender. The data was sourced from Kaggle on containing de-identified data on hospitalized patients. It includes the variables of sex, age, episode number and survival outcome.Though healthcare has dramatically changed over the years, we believe for these predictions to hold true. We used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female can increases the odds of survival by 18%, higher age decreases the probability of survival by 4%, while higher episode numbers have slightly lower chance of survival of about 3%, though it may be as much as 5% or as low as 0%.\n\nSepsis Survival Rate:\n(Episode number refers to the number of times a patient has had Sepsis)\n\n\n\n\n\n\n\n\n\n\n\nOverview of Sepsis:\nSepsis is a dangerous condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases.\nImportant symptoms to lookout for are…\n-  Rashes\n\n-  Change in heart rate\n\n-  Change in body temperature\n\n-  Fatigue\n\n-  Disorientation\n\n-  Discomfort\n\n-  Clammy or sweaty skin\n\n-  Shivers or chills"
   },
   {
     "objectID": "model.html",
     "href": "model.html",
     "title": "Main model",
     "section": "",
-    "text": "\\[\n\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i + \\beta_2 \\cdot \\text{sex}_{i,\\text{Male}} + \\beta_3 \\cdot \\text{episode\\_number}_i\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\nsex\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.18\n0.13, 0.23\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval"
+    "text": "To model the effects of different variables on the probability of survival, we used the following equation…\n\\[\n\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i + \\beta_2 \\cdot \\text{sex}_{i,\\text{Male}} + \\beta_3 \\cdot \\text{episode\\_number}_i\n\\]\nWe recieve the following results indicating a positive effect on the probability of survival if one is female, while there is a decrease in the probability if one is of older age or has more episode numbers…\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\nsex\n\n\n\n\n\n\n    Male\n—\n—\n\n\n    Female\n0.18\n0.13, 0.23\n\n\nepisode_number\n-0.03\n-0.06, 0.00\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nTo visually interpret the survival probability, the model is graphed by taking draws and using the average age of patients.\n\n\n\n\n\n\n\n\n\nFrom this we see that females of younger age with less episode numbers have the highest likelihood of survival while males of older age with more episode numbers would have the lowest likelihood of survival."
   }
 ]

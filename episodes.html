@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sepsis Survival Predictions - Episodes</title>
+<title>Sepsis Survival Predictions - Episode Numbers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -171,7 +171,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Episodes</h1>
+<h1 class="title">Episode Numbers</h1>
 </div>
 
 
@@ -188,6 +188,9 @@ window.Quarto = {
 </header>
 
 
+<p>To see the individual effects of the variables on survival rate, we modeled the variable of the number of episodes using the following equation…</p>
+<p><span class="math display">\[ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i \]</span></p>
+<p>We receive the resulting effect…</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="rbtcldcmep" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -675,6 +678,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>We graph the model to see the clear trend of lower survival rates with more episodes.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -684,7 +688,6 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><span class="math display">\[ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i \]</span></p>
 
 
 
@@ -770,7 +773,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/sophiezla\.github\.io\/sepsis-survival-project\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

@@ -1,1 +1,1 @@
-Sitemap: https://d166a665-24b7-4e0e-9f88-48fc4305f907.netlify.app/sitemap.xml
+Sitemap: https://sophiezla.github.io/sepsis-survival-project/sitemap.xml
