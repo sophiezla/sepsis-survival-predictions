@@ -60,9 +60,14 @@ newobs <- expand.grid(
 )
 
 ```
+
+To model the effects of different variables on the probability of survival, we used the following equation...
+
 $$
 \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i + \beta_2 \cdot \text{sex}_{i,\text{Male}} + \beta_3 \cdot \text{episode\_number}_i
 $$
+
+We recieve the following results indicating a positive effect on the probability of survival if one is female, while there is a decrease in the probability if one is of older age or has more episode numbers...
 
 ```{r}
 #| label: table
@@ -70,6 +75,7 @@ $$
 tbl_regression(fit_sepsis)
 ```
 
+To visually interpret the survival probability, the model is graphed by taking draws and using the average age of patients. 
 
 ```{r}
 #| label: plot
@@ -97,3 +103,4 @@ fit_sepsis |>
 
 ```
 
+From this we see that females of younger age with less episode numbers have the highest likelihood of survival while males of older age with more episode numbers would have the lowest likelihood of survival.

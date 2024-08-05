@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sepsis Survival Predictions - Gender</title>
+<title>Sepsis Survival Predictions - Genders</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -171,7 +171,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Gender</h1>
+<h1 class="title">Genders</h1>
 </div>
 
 
@@ -188,6 +188,9 @@ window.Quarto = {
 </header>
 
 
+<p>We used the following equation to model the effects of gender on the survival rate…</p>
+<p><span class="math display">\[\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{gender}_{i,\text{Male}}\]</span></p>
+<p>From the results we see that females have a slightly higher chance of survival than males.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="gpifrnyfhj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -687,6 +690,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>The model is then graphed using draws in order to visualize the probabilities.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -696,7 +700,6 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><span class="math display">\[\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{gender}_{i,\text{Male}}\]</span></p>
 
 
 

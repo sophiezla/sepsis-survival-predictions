@@ -1,5 +1,5 @@
 ---
-title: "Age"
+title: "Ages"
 execute: 
   echo: false
   warning:  false
@@ -17,6 +17,10 @@ library(broom.mixed)
 # Read in the data
 sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
 ```
+
+To see the effect of age we use the following equation...
+
+$$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i $$
 
 ```{r}
 # Mutate and edit the data
@@ -45,6 +49,8 @@ fit_age <- brm(
 
 ```
 
+From this we see that for every additional year of age, survival rate decreases.
+
 ```{r}
 #| label: table
 tbl_regression(fit_age)
@@ -60,7 +66,7 @@ newobs <- tibble(
 
 ```
 
-
+The model, once graphed mimics a parabolic curve.
 
 ```{r}
 #| label: plot_age
@@ -103,4 +109,3 @@ fit_age |>
   
 ```
 
-$$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i $$

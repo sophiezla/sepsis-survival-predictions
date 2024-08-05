@@ -76,6 +76,7 @@ fit_episode |>
   # Add labels
   labs(
     title = "Predicted Probability of Surviving by Episode Number",
+    subtitle = "Increased episodes result in a lower survival probability",
     x = "Predicted Probability of Surviving",
     y = "Episode Number",
     fill = "Episode Number"

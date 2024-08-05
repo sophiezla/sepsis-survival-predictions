@@ -1,10 +1,12 @@
 ---
-title: "Episodes"
+title: "Episode Numbers"
 execute: 
   echo: false
   warning: false
 ---
+To see the individual effects of the variables on survival rate, we modeled the variable of the number of episodes using the following equation...
 
+$$ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i $$
 
 ```{r}
 #| label: Setup
@@ -45,10 +47,14 @@ fit_episode <- brm(
 
 ```
 
+We receive the resulting effect...
+
 ```{r}
 #| label: table
 tbl_regression(fit_episode)
 ```
+
+We graph the model to see the clear trend of lower survival rates with more episodes.
 
 ```{r}
 #| label: make a new object
@@ -80,6 +86,7 @@ fit_episode |>
   # Add labels
   labs(
     title = "Predicted Probability of Surviving by Episode Number",
+    subtitle = "Increased episodes result in a lower survival probability",
     x = "Predicted Probability of Surviving",
     y = "Episode Number",
     fill = "Episode Number"
@@ -91,4 +98,3 @@ fit_episode |>
 
 ```
 
-$$ \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{episode\_number}_i $$

@@ -1,5 +1,5 @@
 ---
-title: "Gender"
+title: "Genders"
 execute: 
   echo: false
   warning: false
@@ -18,6 +18,10 @@ library(broom.mixed)
 # Read in the data
 sepsis_data <- read.csv("data/s41598-020-73558-3_sepsis_survival_primary_cohort.csv")
 ```
+
+We used the following equation to model the effects of gender on the survival rate...
+
+$$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{gender}_{i,\text{Male}}$$
 
 ```{r}
 # Mutate and edit the data
@@ -44,6 +48,8 @@ fit_gender <- brm(
   refresh = 0)
 ```
 
+From the results we see that females have a slightly higher chance of survival than males.
+
 ```{r}
 #| label: table
 # Use gtsummary and brooms.mixed to make a table
@@ -55,6 +61,8 @@ tbl_regression(fit_gender)
 # Make new object for predictions
 newobs <- tibble(gender = c("Male", "Female"))
 ```
+
+The model is then graphed using draws in order to visualize the probabilities.
 
 ```{r}
 #| label: plot
@@ -81,4 +89,4 @@ fit_gender |>
 ```
 
 
- $$\text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{gender}_{i,\text{Male}}$$
+ 
