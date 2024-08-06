@@ -121,15 +121,15 @@ window.Quarto = {
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Graphs</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-graphs">    
-        <li>
-    <a class="dropdown-item" href="./model.html">
- <span class="dropdown-text">Main model</span></a>
+  <li class="nav-item">
+    <a class="nav-link active" href="./model.html" aria-current="page"> 
+<span class="menu-text">Main model</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-additional-graphs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Additional Graphs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-additional-graphs">    
         <li>
     <a class="dropdown-item" href="./episodes.html">
  <span class="dropdown-text">Episode Numbers</span></a>
@@ -169,7 +169,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model">Model</a></li>
-  <li><a href="#how-to-predict-a-persons-survival-rate-using-model" id="toc-how-to-predict-a-persons-survival-rate-using-model" class="nav-link" data-scroll-target="#how-to-predict-a-persons-survival-rate-using-model">How to predict a person’s survival rate using model</a></li>
+  <li><a href="#predict-your-own-survival-probability" id="toc-predict-your-own-survival-probability" class="nav-link" data-scroll-target="#predict-your-own-survival-probability">Predict Your Own Survival Probability</a></li>
   </ul>
 </nav>
     </div>
@@ -723,8 +723,8 @@ window.Quarto = {
 </div>
 <p>From this we see that females of younger age with less episode numbers have the highest likelihood of survival while males of older age with more episode numbers would have the lowest likelihood of survival.</p>
 </section>
-<section id="how-to-predict-a-persons-survival-rate-using-model" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-predict-a-persons-survival-rate-using-model">How to predict a person’s survival rate using model</h2>
+<section id="predict-your-own-survival-probability" class="level2">
+<h2 class="anchored" data-anchor-id="predict-your-own-survival-probability">Predict Your Own Survival Probability</h2>
 <p>To model one’s own probability of survival, one can input their variables into the equation using the numbers from the table.</p>
 <p>Example for a female with 1 episode of Sepsis of 50 years of age:</p>
 <p>We take the equation:</p>
@@ -738,7 +738,7 @@ window.Quarto = {
 \beta_2 \, (\text{sexFemale}) &amp;= 0.178 \\
 \beta_3 \, (\text{episode\_number}) &amp;= -0.025 \\
 \end{align*}\]</span></p>
-<p>We input the values in the table and variables individual to each person into the equation:</p>
+<p>We input the values in the table and variables of each individual into the equation:</p>
 <p><span class="math display">\[\text{log-odds} = 5.63 + (-0.044 \cdot 50) + (0.178 \cdot 1) + (-0.025 \cdot 1)\]</span> After calculation, the resulting probability is 97.3%</p>
 <p>This can be done for all individuals, though note that this is only a prediction.</p>
 
