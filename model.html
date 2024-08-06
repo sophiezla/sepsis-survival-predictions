@@ -164,7 +164,14 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model">Model</a></li>
+  <li><a href="#how-to-predict-a-persons-survival-rate-using-model" id="toc-how-to-predict-a-persons-survival-rate-using-model" class="nav-link" data-scroll-target="#how-to-predict-a-persons-survival-rate-using-model">How to predict a person’s survival rate using model</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -188,6 +195,8 @@ window.Quarto = {
 </header>
 
 
+<section id="model" class="level2">
+<h2 class="anchored" data-anchor-id="model">Model</h2>
 <p>To model the effects of different variables on the probability of survival, we used the following equation…</p>
 <p><span class="math display">\[
 \text{logit}(\pi_i) = \beta_0 + \beta_1 \cdot \text{age}_i + \beta_2 \cdot \text{sex}_{i,\text{Male}} + \beta_3 \cdot \text{episode\_number}_i
@@ -713,8 +722,28 @@ window.Quarto = {
 </div>
 </div>
 <p>From this we see that females of younger age with less episode numbers have the highest likelihood of survival while males of older age with more episode numbers would have the lowest likelihood of survival.</p>
+</section>
+<section id="how-to-predict-a-persons-survival-rate-using-model" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-predict-a-persons-survival-rate-using-model">How to predict a person’s survival rate using model</h2>
+<p>To model one’s own probability of survival, one can input their variables into the equation using the numbers from the table.</p>
+<p>Example for a female with 1 episode of Sepsis of 50 years of age:</p>
+<p>We take the equation:</p>
+<p><span class="math display">\[
+\text{log-odds} = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{sexFemale} + \beta_3 \cdot \text{episode\_number}
+\]</span></p>
+<p>Where:</p>
+<p><span class="math display">\[\begin{align*}
+\beta_0 \, (\text{Intercept}) &amp;= 5.63 \\
+\beta_1 \, (\text{age}) &amp;= -0.044 \\
+\beta_2 \, (\text{sexFemale}) &amp;= 0.178 \\
+\beta_3 \, (\text{episode\_number}) &amp;= -0.025 \\
+\end{align*}\]</span></p>
+<p>We input the values in the table and variables individual to each person into the equation:</p>
+<p><span class="math display">\[\text{log-odds} = 5.63 + (-0.044 \cdot 50) + (0.178 \cdot 1) + (-0.025 \cdot 1)\]</span> After calculation, the resulting probability is 97.3%</p>
+<p>This can be done for all individuals, though note that this is only a prediction.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
