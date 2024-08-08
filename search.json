@@ -4,7 +4,7 @@
     "href": "sources.html",
     "title": "Sources",
     "section": "",
-    "text": "The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.Chat GPT was also used to help create and clean graphs.\n\nhttps://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records\n\nInformation on Sepsis in this website was sourced from Cleveland Clinic.\n\nhttps://my.clevelandclinic.org/health/diseases/12361-sepsis"
+    "text": "The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis. Chat GPT was also used to help create and clean graphs.\n\nhttps://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records\n\nInformation on Sepsis in this website was sourced from Cleveland Clinic.\n\nhttps://my.clevelandclinic.org/health/diseases/12361-sepsis"
   },
   {
     "objectID": "main-graph.html",
