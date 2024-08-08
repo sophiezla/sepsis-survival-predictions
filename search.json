@@ -4,7 +4,7 @@
     "href": "sources.html",
     "title": "Sources",
     "section": "",
-    "text": "The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.\n\nhttps://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records\n\nInformation on Sepsis in this website was sourced from Cleveland Clinic.\n\nhttps://my.clevelandclinic.org/health/diseases/12361-sepsis"
+    "text": "The dataset was sourced from Kaggle. The data used was the primary cohort from Norway, consisting of 110,204 patient admissions with sepsis.Chat GPT was also used to help create and clean graphs.\n\nhttps://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records\n\nInformation on Sepsis in this website was sourced from Cleveland Clinic.\n\nhttps://my.clevelandclinic.org/health/diseases/12361-sepsis"
   },
   {
     "objectID": "main-graph.html",
@@ -88,7 +88,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "By using a data set from Norway on 110,204 patient admissions of people with Sepsis from 2011 to 2012, I sought to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis and gender. The data was sourced from Kaggle on containing de-identified data on hospitalized patients. It includes the variables of sex, age, episode number and survival outcome.Though healthcare has dramatically changed over the years, I believe for these predictions to hold true. I used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female can increases the odds of survival, higher age decreases the probability of survival for every year, while higher episode numbers have slightly lower chance of survival. A person’s survival probability will lay between 72.7% to 99.7%, depending on their individual variables, while the confidence interval will vary."
+    "text": "By using a data set from Norway on 110,204 patient admissions of people with Sepsis from 2011 to 2012, I sought to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis, age and gender. The data was sourced from Kaggle, containing de-identified data on hospitalized patients.Though healthcare has dramatically changed over the years, I believe for these predictions to hold true. I used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female can increases the odds of survival, higher age decreases the probability of survival for every year, while higher episode numbers have slightly lower chance of survival. A person’s survival probability will lay between 72.7% to 99.7%, depending on their individual variables, while the confidence interval will vary."
   },
   {
     "objectID": "index.html#sepsis-survival-rate",
