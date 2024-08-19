@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sepsis Survival Predictions - Home</title>
+<title>Sepsis Survival Predictions -</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,11 +89,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./overview.html"> 
+    <a class="nav-link active" href="./overview.html" aria-current="page"> 
 <span class="menu-text">Sepsis Overview</span></a>
   </li>  
   <li class="nav-item">
@@ -139,43 +139,43 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview-of-sepsis" id="toc-overview-of-sepsis" class="nav-link active" data-scroll-target="#overview-of-sepsis">Overview of Sepsis:</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Home</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
+<section id="overview-of-sepsis" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-sepsis">Overview of Sepsis:</h2>
+<p>Sepsis is a dangerous medical condition that can occur to anyone. It happens when the body’s immune system responds improperly to infection and damages healthy tissue. This can lead to organ failure, widespread inflammation and possibly death. Sepsis itself is not a disease, but rather caused by other infectious diseases.</p>
+<p>Important symptoms to lookout for are…</p>
+<pre><code>-  Rashes
 
-    
-  
-    
-  </div>
-  
+-  Change in heart rate
 
+-  Change in body temperature
 
-</header>
+-  Fatigue
 
+-  Disorientation
 
-<p>By using a data set from Norway on 110,204 patient admissions of people with the medical condition Sepsis from 2011 to 2012, I sought to understand the probability of survival based upon the factors of numbers of previous episodes of Sepsis, age and gender. The data was sourced from Kaggle, containing de-identified data on hospitalized patients. I used a logistic regression model with the variables of age (numeric variable), sex (categorical variable) and episode number (numeric) set to the outcome of the probability of survival for the i-th individual. From modeling the variables as a logistic function to the outcome, we discovered that being female can increases the odds of survival, higher age decreases the probability of survival for every year, while higher episode numbers have slightly lower chance of survival. A person’s survival probability will lay between 72.7% to 99.7%, depending on their individual variables, while the confidence interval will vary.</p>
-<p><small>(Episode number refers to the number of times a patient has had Sepsis)</small></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/plot-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+-  Discomfort
+
+-  Clammy or sweaty skin
+
+-  Shivers or chills</code></pre>
+<p>Due to the dangerous nature of Sepsis, it is vital to be able to identify and treat as soon as possible. This project aims to provide models to be able to predict the survival probability of different individuals in order to better understand and address the condition.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
