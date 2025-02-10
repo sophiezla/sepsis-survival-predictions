@@ -25,7 +25,7 @@
     "href": "model.html#predict-your-own-survival-probability",
     "title": "Sepsis Survival Predictions",
     "section": "Predict Your Own Survival Probability",
-    "text": "Predict Your Own Survival Probability\nTo model one’s own probability of survival, one can input their variables into the equation using the numbers from the table.\nExample for a female with 1 episode of Sepsis of 50 years of age:\nWe take the equation:\n\\[\n\\text{log-odds} = \\beta_0 + \\beta_1 \\cdot \\text{age} + \\beta_2 \\cdot \\text{sexFemale} + \\beta_3 \\cdot \\text{episode\\_number}\n\\]\nWhere:\n\\[\\begin{align*}\n\\beta_0 \\, (\\text{Intercept}) &= 5.63 \\\\\n\\beta_1 \\, (\\text{age}) &= -0.044 \\\\\n\\beta_2 \\, (\\text{sexFemale}) &= 0.178 \\\\\n\\beta_3 \\, (\\text{episode\\_number}) &= -0.025 \\\\\n\\end{align*}\\]\nWe input the values in the table and variables of each individual into the equation:\n\\[\\text{log-odds} = 5.63 + (-0.044 \\cdot 50) + (0.178 \\cdot 1) + (-0.025 \\cdot 1)\\] After calculation, the resulting probability is 97.3%\nThis can be done for all individuals, though note that this is only a prediction."
+    "text": "Predict Your Own Survival Probability\nTo model one’s own probability of survival, one can input their variables into the equation using the numbers from the table.\nExample for a female with 1 episode of Sepsis of 50 years of age:\nWe take the equation:\n\\[\n\\text{log-odds} = \\beta_0 + \\beta_1 \\cdot \\text{age} + \\beta_2 \\cdot \\text{sexFemale} + \\beta_3 \\cdot \\text{episode\\_number}\n\\]\nWhere:\n\\[\\begin{align*}\n\\beta_0 \\, (\\text{Intercept}) &= 5.63 \\\\\n\\beta_1 \\, (\\text{age}) &= -0.044 \\\\\n\\beta_2 \\, (\\text{sexFemale}) &= 0.178 \\\\\n\\beta_3 \\, (\\text{episode\\_number}) &= -0.025 \\\\\n\\end{align*}\\]\nWe input the values in the table and variables of each individual into the equation:\n\\[\\text{log-odds} = 5.63 + (-0.044 \\cdot 50) + (0.178 \\cdot 1) + (-0.025 \\cdot 1)\\] After calculation, the resulting probability is 97.3%\nThis can be done for all individuals, though note that this is only a prediction based on available data. The number may seem high due to limitations in the dataset."
   },
   {
     "objectID": "index.html",
@@ -53,7 +53,7 @@
     "href": "ages.html",
     "title": "Ages",
     "section": "",
-    "text": "To see the effect of age, I use the following equation…\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]\nFrom this we see that for every additional year of age, survival rate decreases.\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nThe model, once graphed mimics a parabolic curve."
+    "text": "To see the effect of age, I use the following equation…\n\\[\\text{logit}(\\pi_i) = \\beta_0 + \\beta_1 \\cdot \\text{age}_i \\]\nFrom this we see that for every additional year of age, survival rate decreases.\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nBeta\n95% CI\n1\n\n\n\n\nage\n-0.04\n-0.05, -0.04\n\n\n\n1\nCI = Credible Interval\n\n\n\n\n\n\n\n\nThe model shape resembles a logarithmic curve.\n\n\n\n\n\n\n\n\n\nBased on the model, children age ranging 0-10 have the highest survival rate. However the reasonability of this casts doubt on this section of the result. Due to the limitations of the data and model, this will be held with reasonable doubt."
   },
   {
     "objectID": "about.html",
@@ -74,7 +74,7 @@
     "href": "about.html#about-this-site",
     "title": "Sepsis Survival Predictions",
     "section": "About this site",
-    "text": "About this site\nThe Github repository for this project: https://github.com/sophiezla/sepsis-survival-project\nThis project was created as a part of Kane’s Data Science Bootcamp"
+    "text": "About this site\nThe Github repository for this project: https://github.com/sophiezla/sepsis-survival-project\nThis project was created individually during Kane’s Data Science Bootcamp"
   },
   {
     "objectID": "age-graph.html",
