@@ -6,3 +6,5 @@
 /.quarto/
 *_files
 *Rproj
+/_site/
+*_cache/
